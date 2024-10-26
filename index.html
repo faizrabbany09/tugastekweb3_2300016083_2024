@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <img src="WhatsApp Image 2024-09-17 at 13.02.07_78b6a218.jpg" alt="Aboutme" width="150" height="150">
+    <h2>About Me</h2>
+    <p>Nama saya Muhammad faiz rabbany, saya merupakan mahasiswa dari univeristas ahmad dahlan, dan saya memiliki hobi futsal</p>
+    <h2>Projects</h2>
+    <p><a>Project 1 Title</a> - Brief description of Project 1</p>
+    <p><a>Project 2 Title</a> - Brief description of Project 2</p>
+    <h2>Contact</h2>
+    <p>Email: faiz.rabbany04@gmail.com</p>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Page Appearance & To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 500%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #e0e0e0;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        /* Dark mode CSS */
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        /* Slider style */
+        label {
+            display: block;
+            margin-top: 20px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Dynamic Page Appearance</h2>
+        <label for="background-color">Change Background Color:</label>
+        <select id="background-color">
+            <option value="white">White</option>
+            <option value="lightblue">Light Blue</option>
+            <option value="honeydew">Honeydew</option>
+        </select>
+
+        <label for="font-size">Change Font Size:</label>
+        <input type="range" id="font-size" min="10" max="30" value="16">
+        
+        <button id="toggle-dark-mode">Toggle Dark Mode</button>
+
+        <label for="font-style">Change Font Style:</label>
+        <select id="font-style">
+            <option value="Arial">Sans-serif</option>
+            <option value="Times New Roman">Serif</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input type="text" id="task-input" placeholder="Enter a task">
+        <button id="add-task">Add</button>
+
+        <ul id="task-list"></ul>
+    </div>
+
+    <script>
+        // Change background color
+        document.getElementById('background-color').addEventListener('change', function() {
+            document.body.style.backgroundColor = this.value;
+        });
+
+        // Change font size
+        document.getElementById('font-size').addEventListener('input', function() {
+            document.body.style.fontSize = this.value + 'px';
+        });
+
+        // Toggle dark mode
+        document.getElementById('toggle-dark-mode').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Change font style
+        document.getElementById('font-style').addEventListener('change', function() {
+            document.body.style.fontFamily = this.value;
+        });
+
+        // To-Do List: Add Task
+        document.getElementById('add-task').addEventListener('click', addTask);
+
+        function addTask() {
+            const taskInput = document.getElementById('task-input');
+            const taskList = document.getElementById('task-list');
+
+            if (taskInput.value.trim() !== "") {
+                const li = document.createElement('li');
+                li.innerText = taskInput.value;
+
+                // Delete Button
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = 'X';
+                deleteButton.onclick = function() {
+                    li.remove();
+                };
+
+                li.appendChild(deleteButton);
+                taskList.appendChild(li);
+
+                taskInput.value = ''; // Clear input after adding task
+            }
+        }
+
+        // To-Do List: Edit Task
+        document.getElementById('task-list').addEventListener('dblclick', function(e) {
+            if (e.target.tagName === 'LI') {
+                editTask(e.target);
+            }
+        });
+
+        function editTask(element) {
+            const oldText = element.innerText.replace('X', '').trim(); // Remove 'X' button text
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = oldText;
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    element.innerText = input.value;
+
+                    // Add Delete Button again
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = 'X';
+                    deleteButton.onclick = function() {
+                        element.remove();
+                    };
+                    element.appendChild(deleteButton);
+                }
+            });
+
+            element.innerHTML = ''; // Clear li content
+            element.appendChild(input);
+        }
+
+        // To-Do List: Mark Task as Completed
+        document.getElementById('task-list').addEventListener('click', function(e) {
+            if (e.target.tagName === 'LI') {
+                e.target.style.textDecoration = 'line-through';
+            }
+        });
+
+    </script>
+
+
+
+</body>
+</html>
